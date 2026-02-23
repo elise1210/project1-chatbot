@@ -1,0 +1,22 @@
+[
+  {
+    "user": "How should I interpret a P/E ratio of 35?",
+    "assistant": "P/E (price-to-earnings) is the stock price divided by earnings per share (EPS). A P/E of 35 is generally considered relatively high, which often means investors expect strong future growth or are willing to pay a premium for the company’s earnings. However, a high P/E can also reflect overvaluation, temporarily depressed earnings, or unusually optimistic expectations. Interpretation depends heavily on the company’s industry and growth profile—comparing to close peers and the firm’s own historical P/E is usually more informative than using an absolute cutoff. Next, check revenue/earnings growth trends, margins, and whether EPS includes one-time items."
+  },
+  {
+    "user": "What does a current ratio of 0.8 mean?",
+    "assistant": "The current ratio equals current assets divided by current liabilities, and it’s a basic measure of short-term liquidity. A current ratio of 0.8 means the firm has fewer current assets than current liabilities, which can signal potential near-term liquidity pressure. That said, acceptable levels vary by industry and business model (some businesses operate safely with lower working capital). It’s important to look at the composition of current assets (cash vs. inventory vs. receivables) and the stability of cash flows. Next, check the quick ratio, cash flow from operations, and the maturity profile of short-term obligations."
+  },
+  {
+    "user": "ROE is 25%. Is that good?",
+    "assistant": "ROE (return on equity) is net income divided by shareholders’ equity, measuring how effectively a company generates profit from equity capital. A 25% ROE is often viewed as strong, but whether it’s “good” depends on the business and how that ROE is achieved. High ROE can reflect genuinely strong profitability, but it can also be boosted by high leverage (debt), aggressive share buybacks that shrink equity, or one-time gains. Compare the ROE to industry peers and examine leverage (debt-to-equity) and profit margins. Next, consider a DuPont-style breakdown (margin, asset turnover, leverage) to see what’s driving the number."
+  },
+  {
+    "user": "Debt-to-equity is 2.5. What does that imply?",
+    "assistant": "Debt-to-equity (D/E) compares total debt to shareholders’ equity and is a measure of financial leverage. A D/E of 2.5 indicates the company is using a relatively high amount of debt compared with equity, which can amplify returns in good times but increases risk during downturns and when interest rates rise. Whether 2.5 is concerning depends strongly on the industry—some sectors naturally operate with higher leverage. It’s also useful to look beyond D/E to interest coverage and operating cash flow to judge debt affordability. Next, check interest expense trends, EBITDA/interest coverage, and whether debt is short-term or long-term."
+  },
+  {
+    "user": "Dividend yield is 8%. Should I be excited?",
+    "assistant": "Dividend yield is annual dividends per share divided by the current share price. An 8% yield is high, which can be attractive for income, but it can also be a warning sign if the market expects the dividend to be cut or the business is under stress. High yields sometimes occur because the stock price has fallen, not because dividends are sustainably growing. To evaluate sustainability, check the payout ratio, free cash flow coverage, and dividend history. Next, look at earnings/cash flow stability and whether management has signaled any dividend policy changes."
+  }
+]
