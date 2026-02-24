@@ -1,1 +1,48 @@
+domain_name: "Common Stock Financial Ratio Interpretation"
 
+in_scope_topics:
+  - "Interpret price-to-earnings (P/E) ratio"
+  - "Explain price-to-book (P/B) ratio"
+  - "Explain return on equity (ROE) and what drives it"
+  - "Explain return on assets (ROA)"
+  - "Interpret debt-to-equity (D/E) leverage risk"
+  - "Explain current ratio and quick ratio (liquidity)"
+  - "Explain EPS and dividend yield (income signals)"
+  - "Give general interpretation guidance and caveats (industry, accounting, one-time items)"
+
+in_scope_keywords:
+  - "p/e"
+  - "pe ratio"
+  - "price to earnings"
+  - "price-to-earnings"
+  - "p/b"
+  - "pb ratio"
+  - "price to book"
+  - "price-to-book"
+  - "roe"
+  - "return on equity"
+  - "roa"
+  - "return on assets"
+  - "debt to equity"
+  - "debt-to-equity"
+  - "d/e"
+  - "current ratio"
+  - "quick ratio"
+  - "eps"
+  - "earnings per share"
+  - "dividend yield"
+  - "financial ratio"
+  - "ratio"
+
+oos_keywords:
+  - "recipe"
+  - "dating"
+  - "politics"
+  - "weather"
+  - "movie"
+
+safety_keywords:
+  - "suicide"
+  - "kill myself"
+  - "self-harm"
+  - "hurt myself"
