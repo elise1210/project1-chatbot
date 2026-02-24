@@ -16,7 +16,7 @@ The system includes:
 - Cloud Run deployment
 
 Live API URL:  
-`https://project1-chatbot-1018522235899.us-central1.run.app`
+`https://project1-chatbot-slkooky2va-uc.a.run.app/`
 
 ---
 
