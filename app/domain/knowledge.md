@@ -40,6 +40,13 @@ Interpret common stock financial ratios and provide general, non-personalized gu
 - Low ROA: Asset-heavy model or low profitability.
 - Caveats: Capital intensity varies by industry; use with asset turnover.
 
+Operating Margin (Operating Profit Margin)
+Definition: Operating income (EBIT) divided by revenue. It measures operating profitability before interest and taxes.
+Higher operating margin: Often suggests improved operating efficiency, better cost control, or stronger pricing power.
+Lower operating margin: May reflect rising costs, competitive pressure, or inefficiency.
+Caveats: Compare within industry; consider one-time items and cyclicality; confirm sustainability across multiple periods.
+What to check next: Peer comparison, multi-year trend, cost structure changes, and revenue mix.
+
 ### Debt-to-Equity (D/E)
 - Definition: Total debt / total equity.
 - High D/E: More leverage; can boost ROE but increases risk in downturns and with high rates.

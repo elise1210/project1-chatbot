@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from .guardrails import route_question, oos_response, safety_response
 from .prompts import build_messages
 from .llm import chat_completion
+from .postprocess import postprocess_answer
 
 app = FastAPI()
 
@@ -39,21 +40,33 @@ def chat(req: ChatRequest):
         return ChatResponse(answer=oos_response(), in_scope=False, route=route)
 
     if needs_context(req.question):
-        return ChatResponse(
-            answer=escape_answer(),
-            in_scope=True,
-            route="ESCAPE_HATCH",
-        )
+        return ChatResponse(answer=escape_answer(), in_scope=True, route="ESCAPE_HATCH")
 
-    # IN_SCOPE -> LLM
     try:
         messages = build_messages(req.question)
         answer = chat_completion(messages)
+
+        looks_truncated = answer.strip().endswith(":") or answer.strip().endswith(",")
+
+        if looks_truncated:
+            repair_messages = messages + [
+                {
+                    "role": "user",
+                    "content": (
+                        "Rewrite the answer as a complete response using exactly 4 labeled sections:\n"
+                        "Definition:\nGeneral interpretation:\nKey caveats:\nWhat to check next:\n"
+                        "Finish all sentences."
+                    ),
+                }
+            ]
+            answer = chat_completion(repair_messages)
+
+        answer = postprocess_answer(req.question, answer)
+
         return ChatResponse(answer=answer, in_scope=True, route="IN_SCOPE")
+
     except Exception as e:
-        # simple fallback for now
-        return ChatResponse(
-            answer=f"Error calling LLM: {e}",
-            in_scope=True,
-            route="IN_SCOPE",
-        )
+        return ChatResponse(answer=f"Error calling LLM: {e}", in_scope=True, route="IN_SCOPE")
+
+
+
