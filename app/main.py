@@ -1,5 +1,10 @@
+from .escape_hatch import needs_context, escape_answer
 from fastapi import FastAPI
 from pydantic import BaseModel
+
+from .guardrails import route_question, oos_response, safety_response
+from .prompts import build_messages
+from .llm import chat_completion
 
 app = FastAPI()
 
@@ -17,8 +22,30 @@ def health():
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
-    return ChatResponse(
-        answer=f"You asked: {req.question}",
-        in_scope=True,
-        route="IN_SCOPE",
-    )
+    route = route_question(req.question)
+
+    if route == "SAFETY_TRIGGER":
+        return ChatResponse(answer=safety_response(), in_scope=False, route=route)
+
+    if route == "OUT_OF_SCOPE":
+        return ChatResponse(answer=oos_response(), in_scope=False, route=route)
+
+    if needs_context(req.question):
+        return ChatResponse(
+            answer=escape_answer(),
+            in_scope=True,
+            route="ESCAPE_HATCH",
+        )
+
+    # IN_SCOPE -> LLM
+    try:
+        messages = build_messages(req.question)
+        answer = chat_completion(messages)
+        return ChatResponse(answer=answer, in_scope=True, route="IN_SCOPE")
+    except Exception as e:
+        # simple fallback for now
+        return ChatResponse(
+            answer=f"Error calling LLM: {e}",
+            in_scope=True,
+            route="IN_SCOPE",
+        )
