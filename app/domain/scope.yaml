@@ -33,6 +33,12 @@ in_scope_keywords:
   - "dividend yield"
   - "financial ratio"
   - "ratio"
+  - "margin"
+  - "operating margin"
+  - "gross margin"
+  - "net margin"
+  - "profit margin"
+  - "leverage"
 
 oos_keywords:
   - "recipe"
@@ -48,6 +54,7 @@ oos_keywords:
 
 safety_keywords:
   - "suicide"
+  - "suicidal"
   - "kill myself"
   - "self-harm"
   - "hurt myself"

@@ -53,3 +53,4 @@ Environment variables used by the eval:
 - `BASE_URL` (optional, default `http://127.0.0.1:8000`)
 - `JUDGE_MODEL` (optional, default `gemini/gemini-2.5-flash`)
 - `JUDGE_MIN_INTERVAL_SECONDS` (optional, default `0.2`; increase if you still see rate limits)
+  - Recommended judge for reliable text output: `gemini/gemma-3-4b-it`
