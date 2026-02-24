@@ -40,6 +40,11 @@ oos_keywords:
   - "politics"
   - "weather"
   - "movie"
+  - "homework"
+  - "coding"
+  - "sql"
+  - "python"
+  - "cs"
 
 safety_keywords:
   - "suicide"
