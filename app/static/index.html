@@ -29,7 +29,7 @@
       });
 
       const data = await res.json();
-      document.getElementById("response").innerText = data.answer;
+      document.getElementById("response").innerHTML = marked.parse(data.answer);
     }
   </script>
 </body>
