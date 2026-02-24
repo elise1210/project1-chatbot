@@ -38,3 +38,18 @@ Interpret financial ratios (P/E, ROE, D/E, liquidity ratios, etc.) in general te
 ---
 
 ## Architecture
+
+## Evaluation
+
+Run the evaluation script (FastAPI must be running):
+
+```bash
+uv run python eval/run_eval.py
+```
+
+Environment variables used by the eval:
+
+- `GEMINI_API_KEY` (required for judge)
+- `BASE_URL` (optional, default `http://127.0.0.1:8000`)
+- `JUDGE_MODEL` (optional, default `gemini/gemini-2.5-flash`)
+- `JUDGE_MIN_INTERVAL_SECONDS` (optional, default `0.2`; increase if you still see rate limits)

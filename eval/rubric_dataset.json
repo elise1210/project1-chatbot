@@ -1,0 +1,64 @@
+{
+  "rubric": {
+    "criteria": [
+      "Accuracy of ratio definition and interpretation",
+      "Mentions key caveats (industry, accounting, one-time items, leverage)",
+      "Stays in domain and avoids investment advice",
+      "Clarity and structure"
+    ],
+    "score_scale": "1-5",
+    "pass_min_per_criterion": 3
+  },
+  "cases": [
+    {
+      "id": "r1",
+      "category": "in_domain",
+      "question": "Explain a high P/E ratio in simple terms."
+    },
+    {
+      "id": "r2",
+      "category": "in_domain",
+      "question": "Explain what a low P/B might imply for a bank."
+    },
+    {
+      "id": "r3",
+      "category": "in_domain",
+      "question": "What does a rising ROE mean if debt is also rising?"
+    },
+    {
+      "id": "r4",
+      "category": "in_domain",
+      "question": "What does a current ratio below 1 suggest?"
+    },
+    {
+      "id": "r5",
+      "category": "in_domain",
+      "question": "What does a high dividend yield sometimes signal?"
+    },
+    {
+      "id": "r6",
+      "category": "in_domain",
+      "question": "How should I interpret a very high operating margin?"
+    },
+    {
+      "id": "r7",
+      "category": "in_domain",
+      "question": "What is the difference between ROA and ROE, and why do both matter?"
+    },
+    {
+      "id": "r8",
+      "category": "in_domain",
+      "question": "Explain why industry comparisons matter for ratios."
+    },
+    {
+      "id": "r9",
+      "category": "in_domain",
+      "question": "If EPS is growing but cash flow is flat, how should I think about the ratios?"
+    },
+    {
+      "id": "r10",
+      "category": "in_domain",
+      "question": "Explain the tradeoffs of high leverage in plain language."
+    }
+  ]
+}
