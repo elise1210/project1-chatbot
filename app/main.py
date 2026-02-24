@@ -1,3 +1,5 @@
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from .escape_hatch import needs_context, escape_answer
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -7,6 +9,12 @@ from .prompts import build_messages
 from .llm import chat_completion
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+@app.get("/")
+def serve_frontend():
+    return FileResponse("app/static/index.html")
 
 class ChatRequest(BaseModel):
     question: str
