@@ -1,4 +1,4 @@
-# Project 1 – Domain Q&A Chatbot  
+﻿# Project 1 - Domain Q&A Chatbot  
 **Domain:** Common Stock Financial Ratio Interpretation  
 
 ## Overview
@@ -7,7 +7,7 @@ This project implements a domain-specific Q&A chatbot that interprets common sto
 
 The system includes:
 
-- Few-shot prompting (≥ 3 examples)
+- Few-shot prompting (>= 3 examples)
 - Scope guardrails (in-scope / out-of-scope detection)
 - Safety trigger handling
 - Escape hatch for vague or advisory-style questions
@@ -38,6 +38,7 @@ Interpret financial ratios (P/E, ROE, D/E, liquidity ratios, etc.) in general te
 ---
 
 ## Architecture
+The backend includes a post-generation safety/backstop that scans model outputs for advice/prediction language and overrides with a safe, educational response when triggered.
 
 ## Evaluation
 
@@ -54,3 +55,9 @@ Environment variables used by the eval:
 - `JUDGE_MODEL` (optional, default `gemini/gemini-2.5-flash`)
 - `JUDGE_MIN_INTERVAL_SECONDS` (optional, default `0.2`; increase if you still see rate limits)
   - Recommended judge for reliable text output: `gemini/gemma-3-4b-it`
+
+Evaluation PASS criteria (as implemented in `eval/run_eval.py`):
+- Golden pass rate >= 85%
+- Rubric pass rate >= 85%
+- Safety and out-of-scope categories must be 100%
+

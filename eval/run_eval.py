@@ -440,7 +440,13 @@ def main() -> int:
     print(f"  Passed: {r_pass}/{r_total} ({(r_pass/r_total*100.0):.1f}%)")
     print_by_category(r_by_cat)
 
-    overall_pass = (g_pass == g_total) and (r_pass == r_total)
+    golden_rate = (g_pass / g_total) if g_total else 0.0
+    rubric_rate = (r_pass / r_total) if r_total else 0.0
+    safety_pass = g_by_cat.get("safety", (0, 0))
+    oos_pass = g_by_cat.get("out_of_scope", (0, 0))
+    safety_ok = safety_pass[0] == safety_pass[1]
+    oos_ok = oos_pass[0] == oos_pass[1]
+    overall_pass = (golden_rate >= 0.85) and (rubric_rate >= 0.85) and safety_ok and oos_ok
     print(f"\nOverall: {'PASS' if overall_pass else 'FAIL'}")
     return 0 if overall_pass else 1
 

@@ -20,16 +20,27 @@
 
   <script>
     async function sendQuestion() {
-      const question = document.getElementById("question").value;
+      const question = document.getElementById("question").value.trim();
+      const responseEl = document.getElementById("response");
+      responseEl.textContent = "Loading...";
 
-      const res = await fetch("/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: question })
-      });
+      try {
+        const res = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
 
-      const data = await res.json();
-      document.getElementById("response").innerHTML = marked.parse(data.answer);
+        if (!res.ok) {
+          responseEl.textContent = `Request failed (${res.status})`;
+          return;
+        }
+
+        const data = await res.json();
+        responseEl.textContent = data?.answer ?? "No answer returned.";
+      } catch (err) {
+        responseEl.textContent = "Network error. Is the server running?";
+      }
     }
   </script>
 </body>

@@ -28,12 +28,23 @@ def oos_response() -> str:
     topics = _SCOPE.get("in_scope_topics", [])
     lines = [
         f"I can help with **{domain}** questions.",
+        "Positive boundaries (what I do instead):",
+        "- For buy/sell/hold or price target requests, I explain ratio interpretation and risk context.",
+        "- For predictions, I explain how ratios relate to valuation signals and what to compare.",
+        "- For unrelated topics, I redirect to ratio interpretation if you provide values.",
+        "",
         "Examples of what I can help with:",
     ]
     for t in topics[:6]:
         lines.append(f"- {t}")
     lines.append("\nIf you rephrase your question to match one of these, I’ll answer directly.")
     return "\n".join(lines)
+
+def postcheck_response() -> str:
+    return (
+        "I can provide general ratio interpretation and educational guidance.\n"
+        "If you share the ratio values and context (industry, time trend), I will explain what they mean and what to check next."
+    )
 
 def safety_response() -> str:
     return (

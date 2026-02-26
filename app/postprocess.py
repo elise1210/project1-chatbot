@@ -46,3 +46,28 @@ def postprocess_answer(question: str, answer: str) -> str:
         a += "\n\nAdditional notes (for completeness):\n- " + "\n- ".join(add)
 
     return a
+
+
+def postcheck_override(question: str, answer: str) -> tuple[str, bool]:
+    """
+    Post-generation backstop to catch advice/prediction language and override response.
+    Returns (final_answer, overridden).
+    """
+    text = (answer or "").lower()
+    patterns = [
+        r"\b(buy|sell|hold)\b",
+        r"\bprice target\b",
+        r"\btarget price\b",
+        r"\bwill go up\b",
+        r"\bwill go down\b",
+        r"\bguarantee(d)?\b",
+        r"\bsure thing\b",
+        r"\byou should (buy|sell|hold)\b",
+    ]
+    if any(__import__("re").search(p, text) for p in patterns):
+        override = (
+            "I can provide general ratio interpretation and educational guidance.\n"
+            "If you share the ratio values and context (industry, time trend), I will explain what they mean and what to check next."
+        )
+        return override, True
+    return answer, False

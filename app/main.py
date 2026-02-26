@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from .guardrails import route_question, oos_response, safety_response
 from .prompts import build_messages
 from .llm import chat_completion
-from .postprocess import postprocess_answer
+from .postprocess import postprocess_answer, postcheck_override
 
 app = FastAPI()
 
@@ -62,6 +62,9 @@ def chat(req: ChatRequest):
             answer = chat_completion(repair_messages)
 
         answer = postprocess_answer(req.question, answer)
+        answer, overridden = postcheck_override(req.question, answer)
+        if overridden:
+            return ChatResponse(answer=answer, in_scope=False, route="OUT_OF_SCOPE")
 
         return ChatResponse(answer=answer, in_scope=True, route="IN_SCOPE")
 
