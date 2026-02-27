@@ -13,6 +13,7 @@ from litellm import completion
 DEFAULT_BASE_URL = "http://127.0.0.1:8000"
 DEFAULT_MODEL = "gemini/gemini-2.5-flash"
 DEFAULT_JUDGE_MIN_INTERVAL_SECONDS = 0.2
+DEFAULT_JUDGE_MAX_RETRIES = 2
 _LAST_JUDGE_CALL_TS = 0.0
 _PRINTED_FIRST_JUDGE_OUTPUT = False
 
@@ -123,7 +124,8 @@ def _gemini_generation_config(model: str) -> Dict[str, Any]:
 def _judge_with_retries(messages: List[Dict[str, str]], model: str, max_tokens: int) -> Tuple[Dict[str, Any], str]:
     # Call the judge model with retry/backoff on rate limits; return (json_if_any, raw_text).
     last_content = ""
-    for attempt in range(1, 7):
+    max_retries = int(os.getenv("JUDGE_MAX_RETRIES", str(DEFAULT_JUDGE_MAX_RETRIES)))
+    for attempt in range(1, max_retries + 1):
         try:
             _respect_min_judge_interval()
             generation_config = _gemini_generation_config(model)
@@ -168,7 +170,7 @@ def _judge_with_retries(messages: List[Dict[str, str]], model: str, max_tokens: 
             if "429" not in error_text and "rate" not in error_text.lower() and "quota" not in error_text.lower():
                 raise
             wait_seconds = _extract_retry_seconds(error_text) + 1.0
-            print(f"Judge request rate-limited (attempt {attempt}/6). Sleeping {wait_seconds:.1f}s...")
+            print(f"Judge request rate-limited (attempt {attempt}/{max_retries}). Sleeping {wait_seconds:.1f}s...")
             if os.getenv("DEBUG_JUDGE"):
                 print(error_text)
             time.sleep(wait_seconds)
@@ -187,30 +189,16 @@ def _judge_text_with_retries(
     This avoids the "parser defaults everything to 1" failure mode.
     """
     messages: List[Dict[str, str]] = [{"role": "user", "content": prompt}]
-    last = ""
-    for attempt in range(1, 7):
-        _, raw = _judge_with_retries(messages, model, max_tokens)
-        last = raw or ""
-        normalized = last.lower()
-        if require_all_markers:
-            ok = all(marker.lower() in normalized for marker in required_markers)
-        else:
-            ok = any(marker.lower() in normalized for marker in required_markers)
-        if ok:
-            return last
-        # tighten instruction and retry
-        messages = [
-            {
-                "role": "user",
-                "content": (
-                    "Return EXACTLY the requested one-line format. "
-                    "Do not include markdown, code fences, or extra commentary."
-                ),
-            }
-        ] + messages
-        if os.getenv("DEBUG_JUDGE"):
-            print(f"Judge output missing markers {required_markers} (attempt {attempt}); retrying.")
-            print(last)
+    _, raw = _judge_with_retries(messages, model, max_tokens)
+    last = raw or ""
+    normalized = last.lower()
+    if require_all_markers:
+        ok = all(marker.lower() in normalized for marker in required_markers)
+    else:
+        ok = any(marker.lower() in normalized for marker in required_markers)
+    if not ok and os.getenv("DEBUG_JUDGE"):
+        print(f"Judge output missing markers {required_markers}; returning best-effort output.")
+        print(last)
     return last
 
 
