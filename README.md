@@ -15,8 +15,11 @@ The system includes:
 - FastAPI backend
 - Cloud Run deployment
 
-Live API URL:  
-`https://project1-chatbot-slkooky2va-uc.a.run.app/`
+Live URL:  
+`https://project1-chatbot-check-1018522235899.us-central1.run.app`
+
+Health check:  
+`https://project1-chatbot-check-1018522235899.us-central1.run.app/health`
 
 ---
 
@@ -40,6 +43,21 @@ Interpret financial ratios (P/E, ROE, D/E, liquidity ratios, etc.) in general te
 ## Architecture
 The backend includes a post-generation safety/backstop that scans model outputs for advice/prediction language and overrides with a safe, educational response when triggered.
 
+## Run Locally
+
+1. Set the Gemini API key in your shell:
+```bash
+export GEMINI_API_KEY="YOUR_KEY"
+```
+
+2. Start the app:
+```bash
+uv run uvicorn app.main:app --reload
+```
+
+3. Open in browser:
+`http://127.0.0.1:8000`
+
 ## Evaluation
 
 Run the evaluation script (FastAPI must be running):
@@ -54,7 +72,6 @@ Environment variables used by the eval:
 - `BASE_URL` (optional, default `http://127.0.0.1:8000`)
 - `JUDGE_MODEL` (optional, default `gemini/gemini-2.5-flash`)
 - `JUDGE_MIN_INTERVAL_SECONDS` (optional, default `0.2`; increase if you still see rate limits)
-  - Recommended judge for reliable text output: `gemini/gemma-3-4b-it`
 
 Evaluation PASS criteria (as implemented in `eval/run_eval.py`):
 - Golden pass rate >= 85%
